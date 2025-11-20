@@ -11,6 +11,7 @@ from pathlib import Path
 from typing import TYPE_CHECKING, Any
 
 import jinja2
+from diskcache import Cache
 from docutils import nodes
 from docutils.parsers.rst import Directive
 from docutils.parsers.rst.directives import flag
@@ -33,6 +34,7 @@ if TYPE_CHECKING:
 
 
 EXAMPLE_MODULE = "altair.examples"
+cache = Cache("marimo_cache")
 
 
 GALLERY_TEMPLATE = jinja2.Template(
@@ -152,6 +154,10 @@ EXAMPLE_TEMPLATE = jinja2.Template(
         .. code:: python
 
 {{ code | indent(12) }}
+
+.. raw:: html
+
+    <iframe src="{{ iframe_link }}" sandbox></iframe>
 """
 )
 
@@ -316,10 +322,35 @@ class AltairMiniGalleryDirective(Directive):
         return node.children
 
 
+@cache.memoize()
+def convert_to_html(example: dict, html_path: Path) -> None:
+    import subprocess
+    import tempfile
+
+    with tempfile.TemporaryDirectory(delete=True) as temp_py_dir:
+        temp_py_file = Path(temp_py_dir) / "demo.py"
+        convert_cmd = [
+            "uvx",
+            "marimo", "-y", "-q", "convert", example["filename"],
+            "-o", str(temp_py_file)
+        ]
+        subprocess.run(convert_cmd, check=True)
+
+        export_cmd = [
+            "uvx",
+            "marimo", "-q", "export", "html-wasm", str(temp_py_file),
+            "-o", str(html_path),
+            "--mode", "edit",
+            "--force",
+        ]
+        subprocess.run(export_cmd, check=True)
+
+
 def main(app) -> None:
     src_dir = Path(app.builder.srcdir)
     target_dir: Path = src_dir / Path(app.builder.config.altair_gallery_dir)
     image_dir: Path = src_dir / "_images"
+    marimo_dir: Path = src_dir / "_static" / "marimo"
 
     gallery_ref = app.builder.config.altair_gallery_ref
     gallery_title = app.builder.config.altair_gallery_title
@@ -367,13 +398,21 @@ def main(app) -> None:
     save_example_pngs(examples, image_dir)
 
     # Write the individual example files
-    for prev_ex, example, next_ex in prev_this_next(examples):
+    from tqdm import tqdm 
+
+    for prev_ex, example, next_ex in tqdm(prev_this_next(examples)):
         if prev_ex:
             example["prev_ref"] = "gallery_{name}".format(**prev_ex)
         if next_ex:
             example["next_ref"] = "gallery_{name}".format(**next_ex)
         fp = target_dir / "".join((example["name"], ".rst"))
-        fp.write_text(EXAMPLE_TEMPLATE.render(example), encoding=encoding)
+
+        html_path = marimo_dir / f"{example['name']}"
+        html_path.mkdir(exist_ok=True, parents=True)
+
+        convert_to_html(example, html_path)
+
+        fp.write_text(EXAMPLE_TEMPLATE.render(example, iframe_link=str(html_path.parts[-1])), encoding=encoding)
 
 
 def setup(app) -> None:
