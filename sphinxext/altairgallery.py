@@ -155,9 +155,13 @@ EXAMPLE_TEMPLATE = jinja2.Template(
 
 {{ code | indent(12) }}
 
-.. raw:: html
 
-    <iframe src="{{ iframe_link }}" sandbox></iframe>
+    .. tab-item:: Live demo
+        :sync: attribute
+
+        .. raw:: html
+
+            <iframe src="{{ iframe_link }}" width="100%" height="500" frameborder="0" sandbox="allow-scripts allow-same-origin"></iframe>
 """
 )
 
@@ -410,9 +414,10 @@ def main(app) -> None:
         html_path = marimo_dir / f"{example['name']}"
         html_path.mkdir(exist_ok=True, parents=True)
 
-        convert_to_html(example, html_path)
-
-        fp.write_text(EXAMPLE_TEMPLATE.render(example, iframe_link=str(html_path.parts[-1])), encoding=encoding)
+        # convert_to_html(example, html_path)
+        iframe_link = f"/_static/marimo/{html_path.parts[-1]}/index.html?embed=true&show-chrome=false"
+        print(iframe_link)
+        fp.write_text(EXAMPLE_TEMPLATE.render(example, iframe_link=iframe_link, encoding=encoding))
 
 
 def setup(app) -> None:
