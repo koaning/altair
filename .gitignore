@@ -78,3 +78,7 @@ data.json
 
 # type stubs
 typings/
+
+# marimo docs
+doc/_static/marimo/**
+marimo_cache

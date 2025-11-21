@@ -162,6 +162,7 @@ EXAMPLE_TEMPLATE = jinja2.Template(
         .. raw:: html
 
             <iframe src="{{ iframe_link }}" width="100%" height="500" frameborder="0" sandbox="allow-scripts allow-same-origin"></iframe>
+            <p><a src="{{ iframe_link }}">Click here</a> to open up the marimo notebook full screen.</p>
 """
 )
 
