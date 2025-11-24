@@ -11,7 +11,6 @@ from pathlib import Path
 from typing import TYPE_CHECKING, Any
 
 import jinja2
-from diskcache import Cache
 from docutils import nodes
 from docutils.parsers.rst import Directive
 from docutils.parsers.rst.directives import flag
@@ -34,7 +33,6 @@ if TYPE_CHECKING:
 
 
 EXAMPLE_MODULE = "altair.examples"
-cache = Cache("marimo_cache")
 
 
 GALLERY_TEMPLATE = jinja2.Template(
@@ -162,7 +160,7 @@ EXAMPLE_TEMPLATE = jinja2.Template(
         .. raw:: html
 
             <iframe src="{{ iframe_link }}" width="100%" height="500" frameborder="0" sandbox="allow-scripts allow-same-origin"></iframe>
-            <p><a src="{{ iframe_link }}">Click here</a> to open up the marimo notebook full screen.</p>
+            <p><a href="{{ iframe_link }}">Click here</a> to open up the marimo notebook full screen.</p>
 """
 )
 
@@ -327,8 +325,7 @@ class AltairMiniGalleryDirective(Directive):
         return node.children
 
 
-@cache.memoize()
-def convert_to_html(example: dict, html_path: Path) -> None:
+def convert_to_marimo(example: dict, marimo_path: Path) -> None:
     import subprocess
     import tempfile
 
@@ -341,10 +338,30 @@ def convert_to_html(example: dict, html_path: Path) -> None:
         ]
         subprocess.run(convert_cmd, check=True)
 
+        # Clear the "category:" comment and the docsting op top of the file
+        lines = []
+        skip = False
+        for line in temp_py_file.read_text().split("\n"):
+            if line.startswith('"""') or line.endswith("'''"):
+                skip = not skip
+                continue
+            if skip:
+                continue
+            if not line.startswith("#"):
+                lines.append(line)
+        
+        if lines[0] == "":
+            lines = lines[1:]
+
+        if lines[-1] == "":
+            lines = lines[:-1]
+        temp_py_file.write_text("\n".join(lines))
+
+        # We write everything to a single folder to keep the disk space usage low
         export_cmd = [
             "uvx",
             "marimo", "-q", "export", "html-wasm", str(temp_py_file),
-            "-o", str(html_path),
+            "-o", str(marimo_path / f"{example['name']}.html"),
             "--mode", "edit",
             "--force",
         ]
@@ -402,22 +419,15 @@ def main(app) -> None:
     # save the images to file
     save_example_pngs(examples, image_dir)
 
-    # Write the individual example files
-    from tqdm import tqdm 
-
-    for prev_ex, example, next_ex in tqdm(prev_this_next(examples)):
+    for prev_ex, example, next_ex in prev_this_next(examples):
         if prev_ex:
             example["prev_ref"] = "gallery_{name}".format(**prev_ex)
         if next_ex:
             example["next_ref"] = "gallery_{name}".format(**next_ex)
         fp = target_dir / "".join((example["name"], ".rst"))
 
-        html_path = marimo_dir / f"{example['name']}"
-        html_path.mkdir(exist_ok=True, parents=True)
-
-        # convert_to_html(example, html_path)
-        iframe_link = f"/_static/marimo/{html_path.parts[-1]}/index.html?embed=true&show-chrome=false"
-        print(iframe_link)
+        iframe_link = f"/_static/marimo/{example['name']}.html?embed=true&show-chrome=false"
+        convert_to_marimo(example, marimo_dir)
         fp.write_text(EXAMPLE_TEMPLATE.render(example, iframe_link=iframe_link, encoding=encoding))
 
 
