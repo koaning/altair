@@ -11,6 +11,7 @@ from pathlib import Path
 from typing import TYPE_CHECKING, Any
 
 import jinja2
+from diskcache import Cache
 from docutils import nodes
 from docutils.parsers.rst import Directive
 from docutils.parsers.rst.directives import flag
@@ -33,6 +34,7 @@ if TYPE_CHECKING:
 
 
 EXAMPLE_MODULE = "altair.examples"
+cache = Cache("marimo_cache")
 
 
 GALLERY_TEMPLATE = jinja2.Template(
@@ -325,7 +327,8 @@ class AltairMiniGalleryDirective(Directive):
         return node.children
 
 
-def convert_to_marimo(example: dict, marimo_path: Path) -> None:
+@cache.memoize()
+def convert_to_html(example: dict, marimo_path: Path) -> None:
     import subprocess
     import tempfile
 
@@ -338,23 +341,8 @@ def convert_to_marimo(example: dict, marimo_path: Path) -> None:
         ]
         subprocess.run(convert_cmd, check=True)
 
-        # Clear the "category:" comment and the docsting op top of the file
-        lines = []
-        skip = False
-        for line in temp_py_file.read_text().split("\n"):
-            if line.startswith('"""') or line.endswith("'''"):
-                skip = not skip
-                continue
-            if skip:
-                continue
-            if not line.startswith("#"):
-                lines.append(line)
-        
-        if lines[0] == "":
-            lines = lines[1:]
-
-        if lines[-1] == "":
-            lines = lines[:-1]
+        # Clear the "category:" comment
+        lines = [line for line in temp_py_file.read_text().split("\n") if not line.startswith("#")]
         temp_py_file.write_text("\n".join(lines))
 
         # We write everything to a single folder to keep the disk space usage low
@@ -427,7 +415,7 @@ def main(app) -> None:
         fp = target_dir / "".join((example["name"], ".rst"))
 
         iframe_link = f"/_static/marimo/{example['name']}.html?embed=true&show-chrome=false"
-        convert_to_marimo(example, marimo_dir)
+        convert_to_html(example, marimo_dir)
         fp.write_text(EXAMPLE_TEMPLATE.render(example, iframe_link=iframe_link, encoding=encoding))
 
 
