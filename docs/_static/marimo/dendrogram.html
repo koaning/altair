@@ -1,0 +1,401 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <link rel="icon" href="./favicon.ico" />
+    <!-- Preload is necessary because we show these images when we disconnect from the server,
+    but at that point we cannot load these images from the server -->
+    <link rel="preload" href="./assets/gradient-yHQUC_QB.png" as="image" />
+    <link rel="preload" href="./assets/noise-60BoTA8O.png" as="image" />
+    <!-- Preload the fonts -->
+    <link rel="preload" href="./assets/Lora-VariableFont_wght-B2ootaw-.ttf" as="font" crossorigin="anonymous" />
+    <link rel="preload" href="./assets/PTSans-Regular-CxL0S8W7.ttf" as="font" crossorigin="anonymous" />
+    <link rel="preload" href="./assets/PTSans-Bold-D9fedIX3.ttf" as="font" crossorigin="anonymous" />
+    <link rel="preload" href="./assets/FiraMono-Regular-BTCkDNvf.ttf" as="font" crossorigin="anonymous" />
+    <link rel="preload" href="./assets/FiraMono-Medium-DU3aDxX5.ttf" as="font" crossorigin="anonymous" />
+    <link rel="preload" href="./assets/FiraMono-Bold-CLVRCuM9.ttf" as="font" crossorigin="anonymous" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#000000" />
+    <meta name="description" content="a marimo app" />
+    <link rel="apple-touch-icon" href="./apple-touch-icon.png" />
+    <link rel="manifest" href="./manifest.json" />
+
+    <script data-marimo="true">
+      function __resizeIframe(obj) {
+        var scrollbarHeight = 20; // Max between windows, mac, and linux
+
+        function setHeight() {
+          // Guard against race condition where iframe isn't ready
+          if (!obj.contentWindow?.document?.documentElement) {
+            return;
+          }
+          var element = obj.contentWindow.document.documentElement;
+          // If there is no vertical scrollbar, we don't need to resize the iframe
+          if (element.scrollHeight === element.clientHeight) {
+            return;
+          }
+
+          // Create a new height that includes the scrollbar height if it's visible
+          var hasHorizontalScrollbar = element.scrollWidth > element.clientWidth;
+          var newHeight = element.scrollHeight + (hasHorizontalScrollbar ? scrollbarHeight : 0);
+
+          // Only update the height if it's different from the current height
+          if (obj.style.height !== `${newHeight}px`) {
+            obj.style.height = `${newHeight}px`;
+          }
+        }
+
+        // Resize the iframe to the height of the content and bottom scrollbar height
+        setHeight();
+
+        // Resize the iframe when the content changes
+        const resizeObserver = new ResizeObserver((entries) => {
+          setHeight();
+        });
+        // Only observe if iframe content is ready
+        if (obj.contentWindow?.document?.body) {
+          resizeObserver.observe(obj.contentWindow.document.body);
+        }
+      }
+    </script>
+    <marimo-filename hidden>notebook.py</marimo-filename>
+    <!-- TODO(Trevor): Legacy, required by VS Code plugin. Remove when plugin is updated (see marimo/server/_templates/template.py) -->
+    <marimo-version data-version="{{ version }}" hidden></marimo-version>
+    <marimo-user-config data-config="{{ user_config }}" hidden></marimo-user-config>
+    <marimo-server-token data-token="{{ server_token }}" hidden></marimo-server-token>
+    <!-- /TODO -->
+    <title>demo</title>
+    <script type="module" crossorigin src="./assets/index-Bby4ubuq.js"></script>
+    <link rel="modulepreload" crossorigin href="./assets/preload-helper-BnutJmlU.js">
+    <link rel="modulepreload" crossorigin href="./assets/chunk-DZLz74EQ.js">
+    <link rel="modulepreload" crossorigin href="./assets/react-cj45iF1i.js">
+    <link rel="modulepreload" crossorigin href="./assets/compiler-runtime-bbSa6V1W.js">
+    <link rel="modulepreload" crossorigin href="./assets/jsx-runtime-DmpivWpf.js">
+    <link rel="modulepreload" crossorigin href="./assets/useEventListener-DVwjxFkt.js">
+    <link rel="modulepreload" crossorigin href="./assets/react-dom-BjyRIiB0.js">
+    <link rel="modulepreload" crossorigin href="./assets/Combination-ChP9ffHH.js">
+    <link rel="modulepreload" crossorigin href="./assets/clsx-BlAkgCmw.js">
+    <link rel="modulepreload" crossorigin href="./assets/cn-BaXqCYqP.js">
+    <link rel="modulepreload" crossorigin href="./assets/menu-items-DwJgssBv.js">
+    <link rel="modulepreload" crossorigin href="./assets/hotkeys-jCLisiwR.js">
+    <link rel="modulepreload" crossorigin href="./assets/button-DCB7VoVL.js">
+    <link rel="modulepreload" crossorigin href="./assets/dist-CLwJsV2W.js">
+    <link rel="modulepreload" crossorigin href="./assets/createLucideIcon-DbfgBYhq.js">
+    <link rel="modulepreload" crossorigin href="./assets/check-DqnGmZZE.js">
+    <link rel="modulepreload" crossorigin href="./assets/select-BkT3QHmw.js">
+    <link rel="modulepreload" crossorigin href="./assets/multi-map-DOgPLTwj.js">
+    <link rel="modulepreload" crossorigin href="./assets/chevron-right-Bu29x-gp.js">
+    <link rel="modulepreload" crossorigin href="./assets/dropdown-menu-CN5aVh8R.js">
+    <link rel="modulepreload" crossorigin href="./assets/tooltip-fQCr9gxe.js">
+    <link rel="modulepreload" crossorigin href="./assets/_Uint8Array-D5Z9rM2X.js">
+    <link rel="modulepreload" crossorigin href="./assets/_getTag-CVRrQL_Q.js">
+    <link rel="modulepreload" crossorigin href="./assets/_baseIsEqual-CVFfFJm2.js">
+    <link rel="modulepreload" crossorigin href="./assets/jotai-C7U7c6dd.js">
+    <link rel="modulepreload" crossorigin href="./assets/invariant-D5a0EE05.js">
+    <link rel="modulepreload" crossorigin href="./assets/isArrayLikeObject-DKyJYtr8.js">
+    <link rel="modulepreload" crossorigin href="./assets/merge-Dvc5opZF.js">
+    <link rel="modulepreload" crossorigin href="./assets/zod-U2NFpcFA.js">
+    <link rel="modulepreload" crossorigin href="./assets/utils-GFT-p9ER.js">
+    <link rel="modulepreload" crossorigin href="./assets/requests-CftYh9v2.js">
+    <link rel="modulepreload" crossorigin href="./assets/once-C5bmD4W5.js">
+    <link rel="modulepreload" crossorigin href="./assets/toDate-CbcWqY6f.js">
+    <link rel="modulepreload" crossorigin href="./assets/_baseSlice-BWZ0PeaJ.js">
+    <link rel="modulepreload" crossorigin href="./assets/_arrayMap-DQI2GUNb.js">
+    <link rel="modulepreload" crossorigin href="./assets/isSymbol-xTSywenE.js">
+    <link rel="modulepreload" crossorigin href="./assets/toString-CBnct2wx.js">
+    <link rel="modulepreload" crossorigin href="./assets/_hasUnicode-3DIK_jNi.js">
+    <link rel="modulepreload" crossorigin href="./assets/upperFirst-CBQfDRod.js">
+    <link rel="modulepreload" crossorigin href="./assets/capitalize-CBqvgOfA.js">
+    <link rel="modulepreload" crossorigin href="./assets/ai-model-dropdown-6fVxZc7s.js">
+    <link rel="modulepreload" crossorigin href="./assets/badge-Dlbidp5Z.js">
+    <link rel="modulepreload" crossorigin href="./assets/use-toast-BBrPeu2N.js">
+    <link rel="modulepreload" crossorigin href="./assets/constants-CEISdYm1.js">
+    <link rel="modulepreload" crossorigin href="./assets/Deferred-NfAvvkGM.js">
+    <link rel="modulepreload" crossorigin href="./assets/config-CULm_ZjE.js">
+    <link rel="modulepreload" crossorigin href="./assets/uuid-D0hUC3Qw.js">
+    <link rel="modulepreload" crossorigin href="./assets/key-CaC9xuXQ.js">
+    <link rel="modulepreload" crossorigin href="./assets/connection-DOETP_K0.js">
+    <link rel="modulepreload" crossorigin href="./assets/useLifecycle-DiLWmtpP.js">
+    <link rel="modulepreload" crossorigin href="./assets/useNonce-DJX1XgWY.js">
+    <link rel="modulepreload" crossorigin href="./assets/capabilities-MLRWIHmO.js">
+    <link rel="modulepreload" crossorigin href="./assets/createReducer-CTvsuJZY.js">
+    <link rel="modulepreload" crossorigin href="./assets/dist-C6GW8SWp.js">
+    <link rel="modulepreload" crossorigin href="./assets/dist-0FJpM7wG.js">
+    <link rel="modulepreload" crossorigin href="./assets/dist-BFSjfL-I.js">
+    <link rel="modulepreload" crossorigin href="./assets/dist-BrS3KFEl.js">
+    <link rel="modulepreload" crossorigin href="./assets/dist-DvTgOH5F.js">
+    <link rel="modulepreload" crossorigin href="./assets/dist-CZkQ2hcE.js">
+    <link rel="modulepreload" crossorigin href="./assets/dist-DrAMGx2E.js">
+    <link rel="modulepreload" crossorigin href="./assets/dist-YP2XXp1Z.js">
+    <link rel="modulepreload" crossorigin href="./assets/dist-CvIoRIOp.js">
+    <link rel="modulepreload" crossorigin href="./assets/stex-xveX5l_T.js">
+    <link rel="modulepreload" crossorigin href="./assets/cjs-Ck8KMDI1.js">
+    <link rel="modulepreload" crossorigin href="./assets/_baseProperty-c4IQJQis.js">
+    <link rel="modulepreload" crossorigin href="./assets/toNumber-CTOPJrpu.js">
+    <link rel="modulepreload" crossorigin href="./assets/now-BXqTLlmI.js">
+    <link rel="modulepreload" crossorigin href="./assets/debounce-BUM2losY.js">
+    <link rel="modulepreload" crossorigin href="./assets/toInteger-Bor4StOs.js">
+    <link rel="modulepreload" crossorigin href="./assets/type-CnQq0uaD.js">
+    <link rel="modulepreload" crossorigin href="./assets/marked.esm-BV7g2d65.js">
+    <link rel="modulepreload" crossorigin href="./assets/main-ChjX94eX.js">
+    <link rel="modulepreload" crossorigin href="./assets/cells-D2eha_-B.js">
+    <link rel="modulepreload" crossorigin href="./assets/kbd-f3Vl6KVv.js">
+    <link rel="modulepreload" crossorigin href="./assets/renderShortcut-WvNIumsP.js">
+    <link rel="modulepreload" crossorigin href="./assets/useEvent-2G6_06QI.js">
+    <link rel="modulepreload" crossorigin href="./assets/useDeleteCell-BBvlHSmp.js">
+    <link rel="modulepreload" crossorigin href="./assets/lazy-DGC5ohlw.js">
+    <link rel="modulepreload" crossorigin href="./assets/defaultLocale-CNK_a8Z2.js">
+    <link rel="modulepreload" crossorigin href="./assets/precisionRound-B2LwJfpR.js">
+    <link rel="modulepreload" crossorigin href="./assets/defaultLocale-Mn032I1s.js">
+    <link rel="modulepreload" crossorigin href="./assets/vega-loader.browser-BVwjVCQc.js">
+    <link rel="modulepreload" crossorigin href="./assets/tooltip-CJwdMp1K.js">
+    <link rel="modulepreload" crossorigin href="./assets/ErrorBoundary-Bu1xrDr8.js">
+    <link rel="modulepreload" crossorigin href="./assets/alert-dialog-81myxzgR.js">
+    <link rel="modulepreload" crossorigin href="./assets/dialog-B0ZQRYmN.js">
+    <link rel="modulepreload" crossorigin href="./assets/useDebounce-88MnHfxr.js">
+    <link rel="modulepreload" crossorigin href="./assets/numbers-Da0UyJ4q.js">
+    <link rel="modulepreload" crossorigin href="./assets/SSRProvider-BufkqsXB.js">
+    <link rel="modulepreload" crossorigin href="./assets/context-CmoHMC3k.js">
+    <link rel="modulepreload" crossorigin href="./assets/useNumberFormatter-BCRD3Xiy.js">
+    <link rel="modulepreload" crossorigin href="./assets/usePress-BJP5uSM9.js">
+    <link rel="modulepreload" crossorigin href="./assets/input-BYmR6HBp.js">
+    <link rel="modulepreload" crossorigin href="./assets/ImperativeModal-wjVZ4eQS.js">
+    <link rel="modulepreload" crossorigin href="./assets/cell-link-C_YhUpui.js">
+    <link rel="modulepreload" crossorigin href="./assets/alert-Uyjokbhs.js">
+    <link rel="modulepreload" crossorigin href="./assets/links-L8RfsBvj.js">
+    <link rel="modulepreload" crossorigin href="./assets/state-HLf_9r-5.js">
+    <link rel="modulepreload" crossorigin href="./assets/MarimoErrorOutput-CAtwsmR1.js">
+    <link rel="modulepreload" crossorigin href="./assets/spinner-DXjgT_d6.js">
+    <link rel="modulepreload" crossorigin href="./assets/_arrayReduce-DV4IVFuG.js">
+    <link rel="modulepreload" crossorigin href="./assets/startCase-RfubwhHM.js">
+    <link rel="modulepreload" crossorigin href="./assets/strings-DoNzvBC8.js">
+    <link rel="modulepreload" crossorigin href="./assets/command-hjwnCrLr.js">
+    <link rel="modulepreload" crossorigin href="./assets/popover-y-4eU0xo.js">
+    <link rel="modulepreload" crossorigin href="./assets/useRunCells-DyCvt_J0.js">
+    <link rel="modulepreload" crossorigin href="./assets/copy-CvoiXuJX.js">
+    <link rel="modulepreload" crossorigin href="./assets/copy-4VJP-N0g.js">
+    <link rel="modulepreload" crossorigin href="./assets/copy-icon-DNw8yyV3.js">
+    <link rel="modulepreload" crossorigin href="./assets/mode-BvhOdC_B.js">
+    <link rel="modulepreload" crossorigin href="./assets/purify.es-Cz-BfAJO.js">
+    <link rel="modulepreload" crossorigin href="./assets/RenderHTML-BPePlDKV.js">
+    <link rel="modulepreload" crossorigin href="./assets/table-D7dxF_z5.js">
+    <link rel="modulepreload" crossorigin href="./assets/tabs-DmZtZQ_N.js">
+    <link rel="modulepreload" crossorigin href="./assets/useAsyncData-CXeJJDVW.js">
+    <link rel="modulepreload" crossorigin href="./assets/useIframeCapabilities-CE7UrR0d.js">
+    <link rel="modulepreload" crossorigin href="./assets/error-banner-C8bnn_Oj.js">
+    <link rel="modulepreload" crossorigin href="./assets/formats-B6WeWt9C.js">
+    <link rel="modulepreload" crossorigin href="./assets/useTheme-C1t46HlN.js">
+    <link rel="modulepreload" crossorigin href="./assets/en-US-D9Lph-mE.js">
+    <link rel="modulepreload" crossorigin href="./assets/isValid-CJoeYwPo.js">
+    <link rel="modulepreload" crossorigin href="./assets/maps-BGCWjJqb.js">
+    <link rel="modulepreload" crossorigin href="./assets/shim-CL-N1TlJ.js">
+    <link rel="modulepreload" crossorigin href="./assets/download-3twj9Xwh.js">
+    <link rel="modulepreload" crossorigin href="./assets/extends-BUnZS06R.js">
+    <link rel="modulepreload" crossorigin href="./assets/emotion-is-prop-valid.esm-jr96H-64.js">
+    <link rel="modulepreload" crossorigin href="./assets/useDateFormatter-Bt93nQ51.js">
+    <link rel="modulepreload" crossorigin href="./assets/range-ZclXTdAh.js">
+    <link rel="modulepreload" crossorigin href="./assets/table-CTK995oK.js">
+    <link rel="modulepreload" crossorigin href="./assets/Output-nN1GOw3k.js">
+    <link rel="modulepreload" crossorigin href="./assets/name-cell-input-DFksRedA.js">
+    <link rel="modulepreload" crossorigin href="./assets/useHotkey-DWz-THL8.js">
+    <link rel="modulepreload" crossorigin href="./assets/dist-ByBamzbc.js">
+    <link rel="modulepreload" crossorigin href="./assets/dist-BqQuenSr.js">
+    <link rel="modulepreload" crossorigin href="./assets/dist-CA2lBgvV.js">
+    <link rel="modulepreload" crossorigin href="./assets/dist-CdeBdpnu.js">
+    <link rel="modulepreload" crossorigin href="./assets/dist-DLJRvE7V.js">
+    <link rel="modulepreload" crossorigin href="./assets/dist-BYOmBsk_.js">
+    <link rel="modulepreload" crossorigin href="./assets/dist-DyBtC3F_.js">
+    <link rel="modulepreload" crossorigin href="./assets/dist-BWGrOCqz.js">
+    <link rel="modulepreload" crossorigin href="./assets/dist-CUrxoONf.js">
+    <link rel="modulepreload" crossorigin href="./assets/dist-CdaKSxCx.js">
+    <link rel="modulepreload" crossorigin href="./assets/dist-BTy2AO2F.js">
+    <link rel="modulepreload" crossorigin href="./assets/dist-Bf-v2eRP.js">
+    <link rel="modulepreload" crossorigin href="./assets/dist-BMjSE6I1.js">
+    <link rel="modulepreload" crossorigin href="./assets/apl-BbjuiDsS.js">
+    <link rel="modulepreload" crossorigin href="./assets/asciiarmor-DTXJDFvM.js">
+    <link rel="modulepreload" crossorigin href="./assets/asn1-By269rpU.js">
+    <link rel="modulepreload" crossorigin href="./assets/brainfuck-Bcb3sDkN.js">
+    <link rel="modulepreload" crossorigin href="./assets/clike-D4Hc6kDf.js">
+    <link rel="modulepreload" crossorigin href="./assets/clojure-Di966kl0.js">
+    <link rel="modulepreload" crossorigin href="./assets/cmake-EdqYjU-h.js">
+    <link rel="modulepreload" crossorigin href="./assets/cobol-CfB_KfUl.js">
+    <link rel="modulepreload" crossorigin href="./assets/coffeescript-CZnv20P1.js">
+    <link rel="modulepreload" crossorigin href="./assets/commonlisp-B_wA9NNL.js">
+    <link rel="modulepreload" crossorigin href="./assets/crystal-B5VE-DHo.js">
+    <link rel="modulepreload" crossorigin href="./assets/css-CikpO4hp.js">
+    <link rel="modulepreload" crossorigin href="./assets/cypher-DAN695K7.js">
+    <link rel="modulepreload" crossorigin href="./assets/d-Cp2O9KNQ.js">
+    <link rel="modulepreload" crossorigin href="./assets/diff-CaYK6FdG.js">
+    <link rel="modulepreload" crossorigin href="./assets/dtd-CKpjjiwC.js">
+    <link rel="modulepreload" crossorigin href="./assets/dylan-BwFScnVi.js">
+    <link rel="modulepreload" crossorigin href="./assets/ecl-DRplsGLw.js">
+    <link rel="modulepreload" crossorigin href="./assets/eiffel-Uz6uj6V8.js">
+    <link rel="modulepreload" crossorigin href="./assets/elm-W_885aoq.js">
+    <link rel="modulepreload" crossorigin href="./assets/erlang-Dm0JOfW3.js">
+    <link rel="modulepreload" crossorigin href="./assets/simple-mode-H9lcpICo.js">
+    <link rel="modulepreload" crossorigin href="./assets/factor-Cv1PFcda.js">
+    <link rel="modulepreload" crossorigin href="./assets/forth-B_l0qIWF.js">
+    <link rel="modulepreload" crossorigin href="./assets/fortran-CLxZdPOJ.js">
+    <link rel="modulepreload" crossorigin href="./assets/gas-CWKXfdKr.js">
+    <link rel="modulepreload" crossorigin href="./assets/gherkin-DlSGfHGe.js">
+    <link rel="modulepreload" crossorigin href="./assets/groovy-CgF94U6E.js">
+    <link rel="modulepreload" crossorigin href="./assets/haskell-D8PgguQh.js">
+    <link rel="modulepreload" crossorigin href="./assets/haxe-GK8_kbF8.js">
+    <link rel="modulepreload" crossorigin href="./assets/idl-Q7A7KWLA.js">
+    <link rel="modulepreload" crossorigin href="./assets/javascript-CyIGUINn.js">
+    <link rel="modulepreload" crossorigin href="./assets/julia-CQO0ko_c.js">
+    <link rel="modulepreload" crossorigin href="./assets/livescript-CmgdKnEH.js">
+    <link rel="modulepreload" crossorigin href="./assets/lua-mT6czOLr.js">
+    <link rel="modulepreload" crossorigin href="./assets/mathematica-yr8Kagso.js">
+    <link rel="modulepreload" crossorigin href="./assets/mbox-DwCdX69t.js">
+    <link rel="modulepreload" crossorigin href="./assets/mirc-D24moCA0.js">
+    <link rel="modulepreload" crossorigin href="./assets/mllike-1RsOiz7E.js">
+    <link rel="modulepreload" crossorigin href="./assets/modelica-Bmw70I7C.js">
+    <link rel="modulepreload" crossorigin href="./assets/mscgen-Dvk53jZ9.js">
+    <link rel="modulepreload" crossorigin href="./assets/mumps-CuBXsA1c.js">
+    <link rel="modulepreload" crossorigin href="./assets/nsis-P2ivpou9.js">
+    <link rel="modulepreload" crossorigin href="./assets/ntriples-CFrQmJZ8.js">
+    <link rel="modulepreload" crossorigin href="./assets/octave-BE_1B5hT.js">
+    <link rel="modulepreload" crossorigin href="./assets/oz-B8qIV9R9.js">
+    <link rel="modulepreload" crossorigin href="./assets/pascal-Dm4iZfnp.js">
+    <link rel="modulepreload" crossorigin href="./assets/perl-DuC7Sc1M.js">
+    <link rel="modulepreload" crossorigin href="./assets/pig-Dj3wv73m.js">
+    <link rel="modulepreload" crossorigin href="./assets/powershell-CJYdAA3Z.js">
+    <link rel="modulepreload" crossorigin href="./assets/properties-CPd1j9nt.js">
+    <link rel="modulepreload" crossorigin href="./assets/protobuf-BD6S47qV.js">
+    <link rel="modulepreload" crossorigin href="./assets/pug-BEDx7tiF.js">
+    <link rel="modulepreload" crossorigin href="./assets/puppet-BRGJzdBr.js">
+    <link rel="modulepreload" crossorigin href="./assets/python--KWNfsxx.js">
+    <link rel="modulepreload" crossorigin href="./assets/q-KhF-lSPY.js">
+    <link rel="modulepreload" crossorigin href="./assets/r-Casg9NL_.js">
+    <link rel="modulepreload" crossorigin href="./assets/rpm-CLm8BZN9.js">
+    <link rel="modulepreload" crossorigin href="./assets/ruby-kjKq0O38.js">
+    <link rel="modulepreload" crossorigin href="./assets/sas-CNUs9bYJ.js">
+    <link rel="modulepreload" crossorigin href="./assets/scheme-H3s5l6ia.js">
+    <link rel="modulepreload" crossorigin href="./assets/shell-YvTPydQ4.js">
+    <link rel="modulepreload" crossorigin href="./assets/sieve-609IkA1k.js">
+    <link rel="modulepreload" crossorigin href="./assets/smalltalk-D3NOidyD.js">
+    <link rel="modulepreload" crossorigin href="./assets/sparql-CC3YRBhS.js">
+    <link rel="modulepreload" crossorigin href="./assets/stylus-DanbRWv8.js">
+    <link rel="modulepreload" crossorigin href="./assets/swift-qtGHoPyl.js">
+    <link rel="modulepreload" crossorigin href="./assets/tcl-0XlfOish.js">
+    <link rel="modulepreload" crossorigin href="./assets/textile-BsUNa0ba.js">
+    <link rel="modulepreload" crossorigin href="./assets/toml-BkvbWdmE.js">
+    <link rel="modulepreload" crossorigin href="./assets/troff-BM7wyERf.js">
+    <link rel="modulepreload" crossorigin href="./assets/ttcn-cfg-6rqcHSj6.js">
+    <link rel="modulepreload" crossorigin href="./assets/ttcn-In-Os3qL.js">
+    <link rel="modulepreload" crossorigin href="./assets/turtle-N2LAl97c.js">
+    <link rel="modulepreload" crossorigin href="./assets/vb-CHmuFJt3.js">
+    <link rel="modulepreload" crossorigin href="./assets/vbscript-DwRleoLn.js">
+    <link rel="modulepreload" crossorigin href="./assets/velocity-DK0DZeo3.js">
+    <link rel="modulepreload" crossorigin href="./assets/verilog-n25-NWOh.js">
+    <link rel="modulepreload" crossorigin href="./assets/vhdl-DJ2vn3A6.js">
+    <link rel="modulepreload" crossorigin href="./assets/webidl-BsEgPfe4.js">
+    <link rel="modulepreload" crossorigin href="./assets/xquery-Cn6JUpeM.js">
+    <link rel="modulepreload" crossorigin href="./assets/yacas-ZFTwhpzI.js">
+    <link rel="modulepreload" crossorigin href="./assets/z80-Ct8aYSc-.js">
+    <link rel="modulepreload" crossorigin href="./assets/esm-BwqUR0TG.js">
+    <link rel="modulepreload" crossorigin href="./assets/objectWithoutPropertiesLoose-DuRO3TFS.js">
+    <link rel="modulepreload" crossorigin href="./assets/esm-DWtLTXrW.js">
+    <link rel="modulepreload" crossorigin href="./assets/trash-mOekSI_N.js">
+    <link rel="modulepreload" crossorigin href="./assets/ConsoleOutput-Dv7htISD.js">
+    <link rel="modulepreload" crossorigin href="./assets/icons-DNkkeQqC.js">
+    <link rel="modulepreload" crossorigin href="./assets/add-missing-import-CMKdLyLj.js">
+    <link rel="modulepreload" crossorigin href="./assets/blob-ISoY06EG.js">
+    <link rel="modulepreload" crossorigin href="./assets/add-cell-with-ai-B-hltL9V.js">
+    <link rel="modulepreload" crossorigin href="./assets/chart-no-axes-column-C14EHesU.js">
+    <link rel="modulepreload" crossorigin href="./assets/square-function-zb2K8NSn.js">
+    <link rel="modulepreload" crossorigin href="./assets/spec-CBVnxwfI.js">
+    <link rel="modulepreload" crossorigin href="./assets/focus-DkcYPAN0.js">
+    <link rel="modulepreload" crossorigin href="./assets/useInstallPackage-CQfcI_AS.js">
+    <link rel="modulepreload" crossorigin href="./assets/column-preview-DNqIAgxs.js">
+    <link rel="modulepreload" crossorigin href="./assets/useAddCell-f9BZ2_7O.js">
+    <link rel="modulepreload" crossorigin href="./assets/toggle-D182En97.js">
+    <link rel="modulepreload" crossorigin href="./assets/api-DvkfrUs5.js">
+    <link rel="modulepreload" crossorigin href="./assets/globals-BbFlbqp7.js">
+    <link rel="modulepreload" crossorigin href="./assets/share-KKyHVEcH.js">
+    <link rel="modulepreload" crossorigin href="./assets/dist-B5o2gLy7.js">
+    <link rel="modulepreload" crossorigin href="./assets/memoize-DhF8x4Aa.js">
+    <link rel="modulepreload" crossorigin href="./assets/_toKey-16owuO_q.js">
+    <link rel="modulepreload" crossorigin href="./assets/_baseSet-L2qemYhz.js">
+    <link rel="modulepreload" crossorigin href="./assets/utilities.esm-Bmk5DH-t.js">
+    <link rel="modulepreload" crossorigin href="./assets/floating-outline-DRYzI4KS.js">
+    <link rel="modulepreload" crossorigin href="./assets/eye-off-B1gsplPc.js">
+    <link rel="modulepreload" crossorigin href="./assets/plus-DVSnLdy5.js">
+    <link rel="modulepreload" crossorigin href="./assets/readonly-python-code-Dr2-5Hjq.js">
+    <link rel="modulepreload" crossorigin href="./assets/file-video-camera-BakM8DrE.js">
+    <link rel="modulepreload" crossorigin href="./assets/file-text-br2BVDBF.js">
+    <link rel="modulepreload" crossorigin href="./assets/file-D9scEdAT.js">
+    <link rel="modulepreload" crossorigin href="./assets/types-m5vJOc8S.js">
+    <link rel="modulepreload" crossorigin href="./assets/label-DoQ8dPQj.js">
+    <link rel="modulepreload" crossorigin href="./assets/form-C4OqdpTP.js">
+    <link rel="modulepreload" crossorigin href="./assets/textarea-DxQAjCBZ.js">
+    <link rel="modulepreload" crossorigin href="./assets/circle-x-65ujNh_O.js">
+    <link rel="modulepreload" crossorigin href="./assets/refresh-ccw-DFz7B_fr.js">
+    <link rel="modulepreload" crossorigin href="./assets/trash-2-YwvEZLT8.js">
+    <link rel="modulepreload" crossorigin href="./assets/form-CYnSp8Xw.js">
+    <link rel="modulepreload" crossorigin href="./assets/field-LInelSvU.js">
+    <link rel="modulepreload" crossorigin href="./assets/switch-CNBsJN9T.js">
+    <link rel="modulepreload" crossorigin href="./assets/useBoolean-D47R73oR.js">
+    <link rel="modulepreload" crossorigin href="./assets/useDeepCompareMemoize-CGfWpvqN.js">
+    <link rel="modulepreload" crossorigin href="./assets/LazyAnyLanguageCodeMirror-BmYv6_Y6.js">
+    <link rel="modulepreload" crossorigin href="./assets/types-PohSL97i.js">
+    <link rel="modulepreload" crossorigin href="./assets/prop-types-CElKCMhv.js">
+    <link rel="modulepreload" crossorigin href="./assets/es-IayDfy8U.js">
+    <link rel="modulepreload" crossorigin href="./assets/VisuallyHidden-fFcUDWss.js">
+    <link rel="modulepreload" crossorigin href="./assets/_baseFlatten-ViL-mfkw.js">
+    <link rel="modulepreload" crossorigin href="./assets/get-BUGWIXZE.js">
+    <link rel="modulepreload" crossorigin href="./assets/hasIn-BgJKauE7.js">
+    <link rel="modulepreload" crossorigin href="./assets/_basePickBy-CSDa7ReR.js">
+    <link rel="modulepreload" crossorigin href="./assets/pick-BQzWKfma.js">
+    <link rel="modulepreload" crossorigin href="./assets/square-C2sucLEB.js">
+    <link rel="modulepreload" crossorigin href="./assets/code-xml-tuXFIdrH.js">
+    <link rel="modulepreload" crossorigin href="./assets/download-BYnrx3yk.js">
+    <link rel="modulepreload" crossorigin href="./assets/globe-CocuQrDy.js">
+    <link rel="modulepreload" crossorigin href="./assets/send-Cda8V3YD.js">
+    <link rel="modulepreload" crossorigin href="./assets/refresh-cw-CFk1MA73.js">
+    <link rel="modulepreload" crossorigin href="./assets/settings-DukM6PkA.js">
+    <link rel="modulepreload" crossorigin href="./assets/triangle-alert-BBtcXh_3.js">
+    <link rel="modulepreload" crossorigin href="./assets/bundle.esm-DtrWSlr6.js">
+    <link rel="stylesheet" crossorigin href="./assets/cells-BvrC6Bsv.css">
+    <link rel="stylesheet" crossorigin href="./assets/Output-j3zW187k.css">
+    <link rel="stylesheet" crossorigin href="./assets/ConsoleOutput-BFFTcC5Y.css">
+    <link rel="stylesheet" crossorigin href="./assets/index-DWYaH39W.css">
+  <marimo-wasm hidden=""></marimo-wasm>
+    <script>
+        if (window.location.protocol === 'file:') {
+            alert('Warning: This file must be served by an HTTP server to function correctly.');
+        }
+    </script>
+    
+    <style>
+        #save-button {
+            display: none !important;
+        }
+        #filename-input {
+            display: none !important;
+        }
+    </style>
+    <marimo-code hidden="">import%20marimo%0A%0A__generated_with%20%3D%20%220.18.0%22%0Aapp%20%3D%20marimo.App()%0A%0A%0A%40app.cell%0Adef%20_()%3A%0A%20%20%20%20%22%22%22%0A%20%20%20%20Dendrogram%20of%20Hierarchical%20Clustering%0A%20%20%20%20-------------------------------------%0A%20%20%20%20This%20is%20a%20dendrogram%20from%20the%20result%20of%20a%20hierarchical%20clustering.%20It's%20based%20on%20the%20example%20from%0A%20%20%20%20https%3A%2F%2Fscikit-learn.org%2Fstable%2Fauto_examples%2Fcluster%2Fplot_agglomerative_dendrogram.html%0A%20%20%20%20%22%22%22%0A%20%20%20%20%23%20category%3A%20case%20studies%0A%0A%20%20%20%20import%20pandas%20as%20pd%0A%20%20%20%20import%20altair%20as%20alt%0A%20%20%20%20import%20numpy%20as%20np%0A%0A%20%20%20%20%23%20the%20variable%20%60den%60%20shown%20below%20is%20an%20exemplary%20output%20of%20%60scipy.cluster.hierarchy.dendrogram%60%20%0A%20%20%20%20%23%20(https%3A%2F%2Fdocs.scipy.org%2Fdoc%2Fscipy%2Freference%2Fgenerated%2Fscipy.cluster.hierarchy.dendrogram.html%23scipy.cluster.hierarchy.dendrogram)%0A%20%20%20%20%23%20where%20the%20dendrogram%20itself%20is%20truncated%20such%20that%20no%20more%20than%203%20levels%20of%20the%20dendrogram%20tree%20are%20shown.%0A%20%20%20%20den%20%3D%20%7B%0A%20%20%20%20%20%20%20%20'dcoord'%3A%20%5B%5B0.0%2C%200.8187388676087964%2C%200.8187388676087964%2C%200.0%5D%2C%0A%20%20%20%20%20%20%5B0.0%2C%201.105139508538779%2C%201.105139508538779%2C%200.0%5D%2C%0A%20%20%20%20%20%20%5B0.8187388676087964%2C%0A%20%20%20%20%20%20%201.3712698320830048%2C%0A%20%20%20%20%20%20%201.3712698320830048%2C%0A%20%20%20%20%20%20%201.105139508538779%5D%2C%0A%20%20%20%20%20%20%5B0.0%2C%200.9099819926189507%2C%200.9099819926189507%2C%200.0%5D%2C%0A%20%20%20%20%20%20%5B0.0%2C%201.2539936203984452%2C%201.2539936203984452%2C%200.0%5D%2C%0A%20%20%20%20%20%20%5B0.9099819926189507%2C%0A%20%20%20%20%20%20%201.9187528699821954%2C%0A%20%20%20%20%20%20%201.9187528699821954%2C%0A%20%20%20%20%20%20%201.2539936203984452%5D%2C%0A%20%20%20%20%20%20%5B1.3712698320830048%2C%0A%20%20%20%20%20%20%203.828052620290243%2C%0A%20%20%20%20%20%20%203.828052620290243%2C%0A%20%20%20%20%20%20%201.9187528699821954%5D%2C%0A%20%20%20%20%20%20%5B0.0%2C%201.7604450194955439%2C%201.7604450194955439%2C%200.0%5D%2C%0A%20%20%20%20%20%20%5B0.0%2C%201.845844754344974%2C%201.845844754344974%2C%200.0%5D%2C%0A%20%20%20%20%20%20%5B1.7604450194955439%2C%0A%20%20%20%20%20%20%204.847708507921838%2C%0A%20%20%20%20%20%20%204.847708507921838%2C%0A%20%20%20%20%20%20%201.845844754344974%5D%2C%0A%20%20%20%20%20%20%5B0.0%2C%202.8139388316471536%2C%202.8139388316471536%2C%200.0%5D%2C%0A%20%20%20%20%20%20%5B0.0%2C%202.8694176394568705%2C%202.8694176394568705%2C%200.0%5D%2C%0A%20%20%20%20%20%20%5B2.8139388316471536%2C%0A%20%20%20%20%20%20%206.399406819518539%2C%0A%20%20%20%20%20%20%206.399406819518539%2C%0A%20%20%20%20%20%20%202.8694176394568705%5D%2C%0A%20%20%20%20%20%20%5B4.847708507921838%2C%0A%20%20%20%20%20%20%2012.300396052792589%2C%0A%20%20%20%20%20%20%2012.300396052792589%2C%0A%20%20%20%20%20%20%206.399406819518539%5D%2C%0A%20%20%20%20%20%20%5B3.828052620290243%2C%0A%20%20%20%20%20%20%2032.44760699959244%2C%0A%20%20%20%20%20%20%2032.44760699959244%2C%0A%20%20%20%20%20%20%2012.300396052792589%5D%5D%2C%0A%20%20%20%20%20'icoord'%3A%20%5B%5B5.0%2C%205.0%2C%2015.0%2C%2015.0%5D%2C%0A%20%20%20%20%20%20%5B25.0%2C%2025.0%2C%2035.0%2C%2035.0%5D%2C%0A%20%20%20%20%20%20%5B10.0%2C%2010.0%2C%2030.0%2C%2030.0%5D%2C%0A%20%20%20%20%20%20%5B45.0%2C%2045.0%2C%2055.0%2C%2055.0%5D%2C%0A%20%20%20%20%20%20%5B65.0%2C%2065.0%2C%2075.0%2C%2075.0%5D%2C%0A%20%20%20%20%20%20%5B50.0%2C%2050.0%2C%2070.0%2C%2070.0%5D%2C%0A%20%20%20%20%20%20%5B20.0%2C%2020.0%2C%2060.0%2C%2060.0%5D%2C%0A%20%20%20%20%20%20%5B85.0%2C%2085.0%2C%2095.0%2C%2095.0%5D%2C%0A%20%20%20%20%20%20%5B105.0%2C%20105.0%2C%20115.0%2C%20115.0%5D%2C%0A%20%20%20%20%20%20%5B90.0%2C%2090.0%2C%20110.0%2C%20110.0%5D%2C%0A%20%20%20%20%20%20%5B125.0%2C%20125.0%2C%20135.0%2C%20135.0%5D%2C%0A%20%20%20%20%20%20%5B145.0%2C%20145.0%2C%20155.0%2C%20155.0%5D%2C%0A%20%20%20%20%20%20%5B130.0%2C%20130.0%2C%20150.0%2C%20150.0%5D%2C%0A%20%20%20%20%20%20%5B100.0%2C%20100.0%2C%20140.0%2C%20140.0%5D%2C%0A%20%20%20%20%20%20%5B40.0%2C%2040.0%2C%20120.0%2C%20120.0%5D%5D%2C%0A%20%20%20%20%20'ivl'%3A%20%5B%0A%20%20%20%20%20%20%20%20%20'(7)'%2C%20'(8)'%2C%20'41'%2C%20'(5)'%2C%20'(10)'%2C%20'(7)'%2C%20'(4)'%2C%20'(8)'%2C%20'(9)'%2C%20'(15)'%2C%20'(5)'%2C%20'(7)'%2C%20'(4)'%2C%20'(22)'%2C%20'(15)'%2C%20'(23)'%0A%20%20%20%20%20%20%20%20%20%5D%2C%0A%20%20%20%20%7D%0A%0A%20%20%20%20def%20get_leaf_loc(den)%3A%0A%20%20%20%20%20%20%20%20%22%22%22%0A%20%20%20%20%20%20%20%20Get%20the%20location%20of%20the%20leaves%0A%20%20%20%20%20%20%20%20%22%22%22%0A%20%20%20%20%20%20%20%20_from%20%3D%20int(np.array(den%5B%22icoord%22%5D).min())%0A%20%20%20%20%20%20%20%20_to%20%3D%20int(np.array(den%5B%22icoord%22%5D).max()%20%2B%201)%0A%20%20%20%20%20%20%20%20return%20range(_from%2C%20_to%2C%2010)%0A%0A%20%20%20%20def%20get_df_coord(den)%3A%0A%20%20%20%20%20%20%20%20%22%22%22%0A%20%20%20%20%20%20%20%20Get%20coordinate%20dataframe.%0A%20%20%20%20%20%20%20%20%22%22%22%0A%20%20%20%20%20%20%20%20%23%20if%20you%20view%20the%20dendrogram%20as%20a%20collection%20of%20upside-down%20%22U%22%20shapes%2C%20then%0A%20%20%20%20%20%20%20%20%23%20we%20can%20regard%20the%204%20corners%20of%20the%20upside-down%20%22U%22%20as%20points%201%2C%202%2C%203%20and%204.%0A%20%20%20%20%20%20%20%20cols_xk%20%3D%20%5B%22xk1%22%2C%20%22xk2%22%2C%20%22xk3%22%2C%20%22xk4%22%5D%0A%20%20%20%20%20%20%20%20cols_yk%20%3D%20%5B%22yk1%22%2C%20%22yk2%22%2C%20%22yk3%22%2C%20%22yk4%22%5D%0A%0A%20%20%20%20%20%20%20%20df_coord%20%3D%20pd.merge(%0A%20%20%20%20%20%20%20%20%20%20%20%20pd.DataFrame(den%5B%22icoord%22%5D%2C%20columns%3Dcols_xk)%2C%0A%20%20%20%20%20%20%20%20%20%20%20%20pd.DataFrame(den%5B%22dcoord%22%5D%2C%20columns%3Dcols_yk)%2C%0A%20%20%20%20%20%20%20%20%20%20%20%20left_index%3DTrue%2C%0A%20%20%20%20%20%20%20%20%20%20%20%20right_index%3DTrue%0A%20%20%20%20%20%20%20%20)%0A%20%20%20%20%20%20%20%20return%20df_coord%0A%0A%20%20%20%20source%20%3D%20get_df_coord(den)%0A%20%20%20%20base%20%3D%20alt.Chart(source)%0A%0A%20%20%20%20%23%20the%20U%20shape%20is%20composed%20of%20a%20shoulder%20plus%20two%20arms%0A%20%20%20%20shoulder%20%3D%20base.mark_rule().encode(%0A%20%20%20%20%20%20%20%20alt.X(%22xk2%3AQ%22%2C%20title%3D%22%22)%2C%0A%20%20%20%20%20%20%20%20alt.X2(%22xk3%3AQ%22)%2C%0A%20%20%20%20%20%20%20%20alt.Y(%22yk2%3AQ%22%2C%20title%3D%22%22)%0A%20%20%20%20)%0A%20%20%20%20arm1%20%3D%20base.mark_rule().encode(%0A%20%20%20%20%20%20%20%20alt.X(%22xk1%3AQ%22)%2C%20%0A%20%20%20%20%20%20%20%20alt.Y(%22yk1%3AQ%22)%2C%20%0A%20%20%20%20%20%20%20%20alt.Y2(%22yk2%3AQ%22)%0A%20%20%20%20)%0A%20%20%20%20arm2%20%3D%20base.mark_rule().encode(%0A%20%20%20%20%20%20%20%20alt.X(%22xk3%3AQ%22)%2C%20%0A%20%20%20%20%20%20%20%20alt.Y(%22yk3%3AQ%22)%2C%20%0A%20%20%20%20%20%20%20%20alt.Y2(%22yk4%3AQ%22)%0A%20%20%20%20)%0A%0A%20%20%20%20chart_den%20%3D%20shoulder%20%2B%20arm1%20%2B%20arm2%0A%0A%20%20%20%20df_text%20%3D%20pd.DataFrame(dict(labels%3Dden%5B%22ivl%22%5D%2C%20x%3Dget_leaf_loc(den)))%0A%0A%20%20%20%20chart_text%20%3D%20alt.Chart(%0A%20%20%20%20%20%20%20%20df_text%0A%20%20%20%20).mark_text(%0A%20%20%20%20%20%20%20%20dy%3D0%2C%20angle%3D0%2C%20align%3D%22center%22%0A%20%20%20%20).encode(%0A%20%20%20%20%20%20%20%20x%20%3D%20alt.X(%22x%3AQ%22%2C%20axis%3D%7B%22grid%22%3AFalse%2C%20%22title%22%3A%22Number%20of%20points%20in%20nodes%22%7D)%2C%0A%20%20%20%20%20%20%20%20text%20%3D%20alt.Text(%22labels%3AN%22)%0A%20%20%20%20)%0A%0A%20%20%20%20(chart_den%20%26%20chart_text).resolve_scale(%0A%20%20%20%20%20%20%20%20x%3D%22shared%22%0A%20%20%20%20).configure(%0A%20%20%20%20%20%20%20%20padding%3D%7B%22top%22%3A10%2C%22left%22%3A10%7D%0A%20%20%20%20).configure_concat(%0A%20%20%20%20%20%20%20%20spacing%3D0%0A%20%20%20%20).configure_axis(%0A%20%20%20%20%20%20%20%20labels%3DFalse%2C%0A%20%20%20%20%20%20%20%20ticks%3DFalse%2C%0A%20%20%20%20%20%20%20%20grid%3DFalse%0A%20%20%20%20).properties(%0A%20%20%20%20%20%20%20%20title%3D%22Hierarchical%20Clustering%20Dendrogram%22%0A%20%20%20%20)%0A%20%20%20%20return%0A%0A%0Aif%20__name__%20%3D%3D%20%22__main__%22%3A%0A%20%20%20%20app.run()%0A</marimo-code></head>
+  <body>
+    <div id="root"></div>
+    <!-- This is a portal for the data editor to render in -->
+    <div id="portal" data-testid="glide-portal" style="position: fixed; left: 0; top: 0; z-index: 9999"></div>
+    <script data-marimo="true">
+      window.__MARIMO_MOUNT_CONFIG__ = {
+            "filename": "notebook.py",
+            "mode": "edit",
+            "version": "0.18.0",
+            "serverToken": "unused",
+            "config": {"ai": {"models": {"custom_models": [], "displayed_models": []}}, "completion": {"activate_on_typing": true, "copilot": false}, "diagnostics": {"sql_linter": true}, "display": {"cell_output": "below", "code_editor_font_size": 14, "custom_css": [], "dataframes": "rich", "default_table_max_columns": 50, "default_table_page_size": 10, "default_width": "columns", "reference_highlighting": true, "theme": "dark"}, "formatting": {"line_length": 79}, "keymap": {"overrides": {}, "preset": "default"}, "language_servers": {"pylsp": {"enable_flake8": false, "enable_mypy": true, "enable_pydocstyle": false, "enable_pyflakes": false, "enable_pylint": false, "enable_ruff": true, "enabled": false}}, "mcp": {"mcpServers": {}, "presets": []}, "package_management": {"manager": "uv"}, "runtime": {"auto_instantiate": false, "auto_reload": "off", "default_sql_output": "auto", "on_cell_change": "autorun", "output_max_bytes": 8000000, "reactive_tests": true, "std_stream_max_bytes": 1000000, "watcher_on_save": "lazy"}, "save": {"autosave": "off", "autosave_delay": 1000, "format_on_save": false}, "server": {"browser": "default", "follow_symlink": false}, "snippets": {"custom_paths": [], "include_default_snippets": true}},
+            "configOverrides": {},
+            "appConfig": {"sql_output": "auto", "width": "compact"},
+            "view": {"showAppCode": false},
+            "notebook": null,
+            "session": null,
+            "runtimeConfig": null,
+        };
+    </script>
+  </body>
+</html>
